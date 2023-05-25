@@ -7,12 +7,14 @@
     <title>Document</title>
   </head>
   <body style="background-color: antiquewhite">
-    <div>test</div>
+    <div class="test">test</div>
     <button class="button">click</button>
     <script>
       const button = document.querySelector("button");
       console.log(button);
       Notification.requestPermission().then((perm) => {
+        const test = document.querySelector(".test");
+        test.textContent = perm;
         if (perm === "granted") {
           new Notification("test", {
             body: "test",
