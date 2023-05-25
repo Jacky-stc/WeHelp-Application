@@ -12,7 +12,13 @@
     <script>
       const button = document.querySelector("button");
       console.log(button);
-      Notification.requestPermission();
+      Notification.requestPermission().then((perm) => {
+        if (perm === "granted") {
+          new Notification("test", {
+            body: "test",
+          });
+        }
+      });
       button.addEventListener("click", () => {
         Notification.requestPermission().then((perm) => {
           if (perm === "granted") {
