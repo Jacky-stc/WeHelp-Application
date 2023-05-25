@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body style="background-color: antiquewhite">
+    <div>test</div>
+    <button class="button">click</button>
+    <script>
+      const button = document.querySelector("button");
+      console.log(button);
+      Notification.requestPermission();
+      button.addEventListener("click", () => {
+        Notification.requestPermission().then((perm) => {
+          if (perm === "granted") {
+            const notification = new Notification("Example", {
+              body: Math.random().toString(),
+              data: { hello: "world" },
+              tag: "example",
+            });
+            console.log("serviceWorker" in navigator);
+            console.log("PushManager" in window);
+            console.log(navigator.serviceWorker);
+            ServiceWorkerContainer.navigator.serviceWorker.ready.then(
+              (registration) => {
+                console.log("yes");
+                registration.pushManager
+                  .subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey:
+                      "BM9WJL4a2bEa15jsV2YMpnkTqJX3hVdrbNz3VJO1t_cFmKmQByxE0L0Gd6smo1hXO6km90Bd2G2DyPCn0GvzvnQ",
+                  })
+                  .then((subscription) => {
+                    console.log(subscription);
+                  });
+              }
+            );
+          }
+        });
+      });
+      // let notification;
+      // const url = window.location.hostname;
+      // if (url == "new-tab-page") {
+      //   new Notification("test", {
+      //     body: "test",
+      //   });
+      // }
+      // document.addEventListener("visibilitychange", () => {
+      //   if (document.visibilityState === "hidden") {
+      //     notification = new Notification("come back", {
+      //       body: "pls",
+      //     });
+      //   } else {
+      //     notification.close();
+      //   }
+      // });
+    </script>
+  </body>
+</html>
