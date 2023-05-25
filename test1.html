@@ -12,15 +12,20 @@
     <script>
       const button = document.querySelector("button");
       console.log(button);
-      Notification.requestPermission().then((perm) => {
+      if ("Notification" in window) {
+        Notification.requestPermission().then((perm) => {
+          const test = document.querySelector(".test");
+          test.textContent = perm;
+          if (perm === "granted") {
+            new Notification("test", {
+              body: "test",
+            });
+          }
+        });
+      } else {
         const test = document.querySelector(".test");
-        test.textContent = perm;
-        if (perm === "granted") {
-          new Notification("test", {
-            body: "test",
-          });
-        }
-      });
+        test.textContent = "not support";
+      }
       button.addEventListener("click", () => {
         Notification.requestPermission().then((perm) => {
           if (perm === "granted") {
